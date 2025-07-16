@@ -26,6 +26,6 @@
 ---
 include:
   - board: nice_nano_v2
-    shield: sofle_left zmk-nice-oled
+    shield: sofle_left
   - board: nice_nano_v2
-    shield: sofle_right zmk-nice-oled
+    shield: sofle_right
