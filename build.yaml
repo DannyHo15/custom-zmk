@@ -27,5 +27,7 @@
 include:
   - board: nice_nano_v2
     shield: sofle_left nice_oled
+    snippet: oled-custom
   - board: nice_nano_v2
     shield: sofle_right nice_oled
+    snippet: oled-custom
