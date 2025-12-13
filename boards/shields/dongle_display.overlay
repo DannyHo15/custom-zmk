@@ -1,0 +1,72 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,display = &oled;
+        zmk,battery = &vbatt;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        label = "KSCAN";
+        diode-direction = "col2row";
+        
+        col-gpios
+            = <&gpio0 28 GPIO_ACTIVE_HIGH>
+            ;
+    };
+
+    vbatt: vbatt {
+        compatible = "zmk,battery-voltage-reader";
+        label = "BATTERY";
+        io-channel = <&adc>;
+        output-ohms = <47>;
+        full-ohms = <(47 + 47)>;
+        voltage-divider = <2>;
+    };
+
+    pro_micro_i2c: &i2c0 {};
+    pro_micro: &gpio0 {};
+
+    left_connector: left_connector {
+        compatible = "zmk,bt-hci-rpmsg";
+        label = "LEFT_CONNECTOR";
+    };
+};
+
+&adc {
+    status = "okay";
+};
+
+&gpiote {
+    status = "okay";
+};
+
+&gpio0 {
+    status = "okay";
+};
+
+&i2c0 {
+    compatible = "nordic,nrf-twi";
+    status = "okay";
+    sda-pin = <26>;
+    scl-pin = <27>;
+    clock-frequency = <I2C_BITRATE_FAST>;
+    
+    oled: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        label = "DISPLAY";
+        width = <128>;
+        height = <64>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-max-width = <128>;
+        display-max-height = <64>;
+        segment-multiplex = <1>;
+        prechargep = <0x22>;
+        prechargen = <1>;
+        reset-gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+    };
+};
